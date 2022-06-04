@@ -21,16 +21,13 @@ var loadTimeBlocks = function() {
 };
 
 // compare current time to timeblocks
-var auditTimeBlock = function(){
+var auditTimeBlock = function() {
     // reset timeblock classes
     $("textarea").removeClass("past present future");
-
     // convert current time to 24-hour format
     var currentTime = moment().format("H");
-    
     // counter for row index
     var index = 0;
-
     // check timeblocks between 9AM (9 hours) to 5PM (18 hours)
     for (var i = 9; i < 18; i++) {
         if (i < currentTime) {
@@ -48,6 +45,19 @@ var auditTimeBlock = function(){
     }
 };
 
+// interval for checking timeblocks
+var timer = function() {
+    // run function once at start of hour
+    auditTimeBlock();
+    // set interval for every hour
+    var auditTimer = setInterval(auditTimeBlock, (1000*60)*60);
+};
+// variable to check how much time is left until next hour
+var timeLeft = moment().add(1, 'h').minute(0).second(0).millisecond(0).diff(moment());
+// timeout interval set to start upon next hour
+setTimeout(timer, timeLeft);
+
 loadTimeBlocks();
 
+// check timeblocks once upon loading schedule
 auditTimeBlock();
