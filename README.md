@@ -6,7 +6,7 @@ A user is able to add events to the schedule by clicking on the text field and e
 
 ## The following image depicts a screenshot of the completed work day scheduler
 
-![Screenshot of work day scheduler](./assets/images/Screenshot-Work-Day-Scheduler)
+![Screenshot of work day scheduler](./assets/images/Screenshot-Work-Day-Scheduler.jpg)
 
 ## The following links are for the git repository and application:
 
