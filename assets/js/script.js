@@ -1,6 +1,7 @@
-// let code load DOM first
 var currentDate = moment().format('dddd, MMMM Do');
 var auditTimer = "";
+// hide saved event message first
+$(".savedAlert").children("p").hide();
 
 // display date at top of page
 $("#currentDay").append(currentDate);
@@ -61,6 +62,12 @@ $(document).ready(function () {
         var rowText = $(this).parent().siblings("textarea").val();
     
         localStorage.setItem(rowTimeId, rowText);
+
+        // display saved event message, then hide it
+        $(".savedAlert").children("p").show();
+        setTimeout(function() {
+            $(".savedAlert").children("p").hide();
+        }, 3000);
     });
 });
 

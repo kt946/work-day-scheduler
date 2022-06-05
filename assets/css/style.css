@@ -19,6 +19,15 @@ textarea{
   color: black;
   border-radius: 0;
   border-bottom: 10px solid black;
+  margin-bottom: 0;
+}
+
+.savedAlert {
+  height: 2rem;
+}
+
+.savedAlert p {
+  padding: 8px;
 }
 
 .description{
