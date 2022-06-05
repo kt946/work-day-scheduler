@@ -35,21 +35,26 @@ var auditTimeBlock = function() {
     for (var i = 9; i < 18; i++) {
         if (i < currentTime) {
             $(".row").eq(index).find("textarea").addClass("past");
-            index++;
         }
         else if (i > currentTime) {
             $(".row").eq(index).find("textarea").addClass("future");
-            index++;
         }
         else {
             $(".row").eq(index).find("textarea").addClass("present");
-            index++;
         }
+        index++;
     }
 };
 
-// ready once document finishes loading HTML/CSS and timeblocks
+// ready function once document finishes loading HTML/CSS and timeblocks
 $(document).ready(function () {
+    // load text field for each row from local storage
+    $(".row").each(function() {
+        var rowLabel = $(this).children().find("span").text();
+        $(this).find("textarea").append(localStorage.getItem(rowLabel));
+    });
+
+    // save text field to local storage
     $(".saveBtn").on("click", function() {
         var rowTimeId = $(this).parent().children().find("span").text();
         var rowText = $(this).siblings("textarea").val();
