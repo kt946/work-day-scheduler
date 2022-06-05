@@ -1,4 +1,4 @@
-// let code load HTML/CSS and timeblocks first
+// let code load DOM first
 var currentDate = moment().format('dddd, MMMM Do');
 var auditTimer = "";
 
@@ -19,7 +19,7 @@ var loadTimeBlocks = function() {
     // add textarea and button to each row
     $(".row").append(
         "<textarea class='col-10 description'></textarea>" +
-        "<button class='col saveBtn'><i type='button' class='fas fa-save'></i></button>"
+        "<div class='col saveBtn'><i type='button' class='fas fa-save'></i></div>"
     );
 };
 
@@ -27,37 +27,38 @@ var loadTimeBlocks = function() {
 var auditTimeBlock = function() {
     // reset timeblock classes
     $("textarea").removeClass("past present future");
+
     // convert current time to 24-hour format
     var currentTime = moment().format("H");
-    // counter for row index
-    var index = 0;
-    // check timeblocks between 9AM (9 hours) to 5PM (18 hours)
-    for (var i = 9; i < 18; i++) {
-        if (i < currentTime) {
-            $(".row").eq(index).find("textarea").addClass("past");
+
+    // check timeblocks between 9AM to 5PM 
+    $(".row").each(function() {
+        var timeLabel = $(this).find("span").text();
+        var rowTime = parseInt(moment(timeLabel, "hA").format("H"));
+        if (rowTime < currentTime) {
+            $(this).find("textarea").addClass("past");
         }
-        else if (i > currentTime) {
-            $(".row").eq(index).find("textarea").addClass("future");
+        else if (rowTime > currentTime) {
+            $(this).find("textarea").addClass("future");
         }
         else {
-            $(".row").eq(index).find("textarea").addClass("present");
+            $(this).find("textarea").addClass("present");
         }
-        index++;
-    }
+    });
 };
 
-// ready function once document finishes loading HTML/CSS and timeblocks
+// ready method once document finishes loading
 $(document).ready(function () {
     // load text field for each row from local storage
     $(".row").each(function() {
-        var rowLabel = $(this).children().find("span").text();
+        var rowLabel = $(this).find("span").text();
         $(this).find("textarea").append(localStorage.getItem(rowLabel));
     });
 
     // save text field to local storage
-    $(".saveBtn").on("click", function() {
-        var rowTimeId = $(this).parent().children().find("span").text();
-        var rowText = $(this).siblings("textarea").val();
+    $("i").on("click", function() {
+        var rowTimeId = $(this).parent().siblings().find("span").text();
+        var rowText = $(this).parent().siblings("textarea").val();
     
         localStorage.setItem(rowTimeId, rowText);
     });
