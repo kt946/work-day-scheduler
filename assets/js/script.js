@@ -8,9 +8,9 @@ $("#currentDay").append(currentDate);
 
 // load timeblocks from 9AM - 5PM
 var loadTimeBlocks = function() {
-    // create timeblock rows from 9AM (9 hours) to 5PM (18 hours)
+    // create timeblock rows from 9AM (i = 9) to 5PM (i = 17)
     for (var i = 9; i < 18; i++) {
-        // create label for each row by converting 24-hour time into 12-hour time format
+        // create label for each row by converting 24-hour format into 12-hour format
         var timeLabel = moment(i, "H").format("hA");
         $(".container").append(
             "<div class='row time-block'><div class='col hour card-header'><span>"
@@ -32,7 +32,7 @@ var auditTimeBlock = function() {
     // convert current time to 24-hour format
     var currentTime = moment().format("H");
 
-    // check timeblocks between 9AM to 5PM 
+    // check timeblocks and update colors 
     $(".row").each(function() {
         var timeLabel = $(this).find("span").text();
         var rowTime = parseInt(moment(timeLabel, "hA").format("H"));
